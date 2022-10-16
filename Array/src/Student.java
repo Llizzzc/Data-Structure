@@ -1,10 +1,13 @@
 public class Student implements Comparable<Student> {
     private String name;
+    private int number;
     private int score;
+
     public Student(String name, int score) {
         this.name = name;
         this.score = score;
     }
+
     @Override
     public int compareTo(Student another) {
 //        if (this.score < another.score)
@@ -14,23 +17,25 @@ public class Student implements Comparable<Student> {
 //        return 0;
         return this.score - another.score;
     }
+
     @Override
     public String toString() {
         return String.format("Student(name: %s, score: %d)", name, score);
     }
+
     @Override
     public boolean equals(Object student) {
-        if (this == student) return true;
-        if (student == null) return false;
-        if (this.getClass() != student.getClass()) return false;
-        Student another  = (Student) student;
-        return this.name.toLowerCase().equals(another.name.toLowerCase());
+        if (this == student) return true; //    是否比较的是同一个对象
+        if (student == null) return false;  // 传入对象是否为空
+        if (this.getClass() != student.getClass()) return false;    // 是否属于同一个类
+        Student another = (Student) student;
+        return this.number == another.number && this.name.equals(another.name);
     }
 
     public static void main(String[] args) {
-        Array <Student> arr = new Array<>();
-        arr.addList(new Student("dell", 12));
-        arr.addList(new Student("lee", 23));
+        Array<Student> arr = new Array<>();
+        arr.addLast(new Student("dell", 12));
+        arr.addLast(new Student("lee", 23));
         System.out.println(arr);
     }
 }
