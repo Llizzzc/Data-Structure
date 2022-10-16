@@ -1,2 +1,5 @@
 .*
 !.gitignore
+*/.*
+*/out
+*/*.iml
