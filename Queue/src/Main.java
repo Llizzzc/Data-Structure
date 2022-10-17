@@ -2,7 +2,8 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        int opData[] = {10000, 100000};
+        int[] opData = {10000, 100000};
+        // 数组队列和循环队列出入队时间消耗的比较
         for (int opCount : opData) {
             ArrayQueue<Integer> q1 = new ArrayQueue<>();
             double time1 = test(q1, opCount);
@@ -13,13 +14,14 @@ public class Main {
             System.out.println("LoopQueue: " + time2 + "s");
         }
     }
+
     private static double test(Queue<Integer> q, int opCount) {
         long start = System.nanoTime();
         Random random = new Random();
-        for (int i = 0; i < opCount; i ++) {
+        for (int i = 0; i < opCount; i++) {
             q.enqueue(random.nextInt(Integer.MAX_VALUE));
         }
-        for (int i = 0; i < opCount; i ++) {
+        for (int i = 0; i < opCount; i++) {
             q.dequeue();
         }
         long end = System.nanoTime();
