@@ -1,4 +1,8 @@
-public class LinkedList<E> {
+/*
+ * 不使用虚拟头节点实现链表
+ *
+ */
+public class NoDummyLinkedList<E> {
     private class Node {
         public E e;
         public Node next;
@@ -22,11 +26,11 @@ public class LinkedList<E> {
         }
     }
 
-    private Node dummyHead; // 虚拟头，链头插入不需额外处理
-    private int size;
+    public Node head;
+    public int size;
 
-    public LinkedList() {
-        dummyHead = new Node(null, null);
+    public NoDummyLinkedList() {
+        head = null;
         size = 0;
     }
 
@@ -38,20 +42,24 @@ public class LinkedList<E> {
         return size == 0;
     }
 
-    public void addFirst(E e) {
-        add(0, e);
-    }
-
     public void add(int index, E e) {
         if (index < 0 || index > size) {
             throw new IllegalArgumentException("Add failed. Illegal index.");
         }
-        Node prev = dummyHead;
-        // 找到待插入位置的前一个节点
-        for (int i = 0; i < index; i++) {
-            prev = prev.next;
+        if (index == 0) {
+            addFirst(e);
+        } else {
+            Node prev = head;
+            for (int i = 0; i < index - 1; i++) {
+                prev = prev.next;
+            }
+            prev.next = new Node(e, prev.next);
+            size++;
         }
-        prev.next = new Node(e, prev.next);
+    }
+
+    public void addFirst(E e) {
+        head = new Node(e, head);
         size++;
     }
 
@@ -63,7 +71,7 @@ public class LinkedList<E> {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Get failed. Illegal index.");
         }
-        Node cur = dummyHead.next;  // dummyHead的下一个节点为第一个节点
+        Node cur = head;
         for (int i = 0; i < index; i++) {
             cur = cur.next;
         }
@@ -82,7 +90,7 @@ public class LinkedList<E> {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Set failed. Illegal index.");
         }
-        Node cur = dummyHead.next;
+        Node cur = head;
         for (int i = 0; i < index; i++) {
             cur = cur.next;
         }
@@ -90,7 +98,7 @@ public class LinkedList<E> {
     }
 
     public boolean contains(E e) {
-        Node cur = dummyHead.next;
+        Node cur = head;
         while (cur != null) {
             if (cur.e.equals(e)) {
                 return true;
@@ -104,30 +112,39 @@ public class LinkedList<E> {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Remove failed. Illegal index.");
         }
-        Node prev = dummyHead;
-        for (int i = 0; i < index; i++) {
-            prev = prev.next;
+        if (index == 0) {
+            return removeFirst();
+        } else {
+            Node prev = head;
+            for (int i = 0; i < index - 1; i++) {
+                prev = prev.next;
+            }
+            Node ret = prev.next;
+            prev.next = ret.next;
+            ret.next = null;
+            size--;
+            return ret.e;
         }
-        Node ret = prev.next;
-        prev.next = ret.next;
+    }
+
+    public E removeFirst() {
+        Node ret = head;
+        head = head.next;
         ret.next = null;
         size--;
         return ret.e;
     }
 
-    public E removeFirst() {
-        return remove(0);
-    }
-
     public E removeLast() {
         return remove(size - 1);
     }
-    
+
+
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
-        Node cur = dummyHead.next;
         res.append(String.format("LinkedList: size = %d\n", size));
+        Node cur = head;
         while (cur != null) {
             res.append(cur).append("->");
             cur = cur.next;
@@ -137,21 +154,17 @@ public class LinkedList<E> {
     }
 
     public static void main(String[] args) {
-        LinkedList<Integer> linkedList = new LinkedList<>();
+        NoDummyLinkedList<Integer> list = new NoDummyLinkedList<>();
+        System.out.println(list);
         for (int i = 0; i < 5; i++) {
-            linkedList.addFirst(i);
-            System.out.println(linkedList);
+            list.addLast(i);
+            System.out.println(list);
         }
-        linkedList.add(3, 5);
-        System.out.println(linkedList);
-        linkedList.remove(5);
-        System.out.println(linkedList);
-        linkedList.remove(1);
-        System.out.println(linkedList);
-        linkedList.set(2, 99);
-        System.out.println(linkedList);
-        System.out.println(linkedList.getFirst());
-        System.out.println(linkedList.contains(1));
-        System.out.println(linkedList.contains(-1));
+        list.removeFirst();
+        System.out.println(list);
+        list.removeLast();
+        System.out.println(list);
+        list.remove(1);
+        System.out.println(list);
     }
 }
