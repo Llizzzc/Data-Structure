@@ -12,6 +12,10 @@ public class Main {
             LoopQueue<Integer> q2 = new LoopQueue<>();
             double time2 = test(q2, opCount);
             System.out.println("LoopQueue: " + time2 + "s");
+
+            LinkedQueue<Integer> q3 = new LinkedQueue<>();
+            double time3 = test(q3, opCount);
+            System.out.println("LinkedQueue: " + time3 + "s");
         }
     }
 

@@ -3,49 +3,62 @@ public class LinkedQueue<E> implements Queue<E> {
     private class Node {
         public E e;
         public Node next;
+
         public Node(E e, Node next) {
             this.e = e;
             this.next = next;
         }
+
         public Node(E e) {
             this(e, null);
         }
+
         public Node() {
             this(null, null);
         }
+
+        @Override
+        public String toString() {
+            return e.toString();
+        }
     }
-    private  Node head;
+
+    private Node head;
     private Node tail;
     private int size;
+
     public LinkedQueue() {
         head = null;
         tail = null;
         size = 0;
     }
+
     @Override
     public int getSize() {
         return size;
     }
+
     @Override
     public boolean isEmpty() {
         return size == 0;
     }
+
     @Override
     public void enqueue(E e) {
         if (tail == null) {
             tail = new Node(e);
             head = tail;
         } else {
-            tail = new Node(e);
+            tail.next = new Node(e);
             tail = tail.next;
         }
-        size ++;
+        size++;
     }
 
     @Override
     public E dequeue() {
         if (isEmpty()) {
-            throw new IllegalArgumentException("empty queue");
+            throw new IllegalArgumentException("Dequeue failed. Empty queue.");
         }
         Node ret = head;
         head = head.next;
@@ -53,20 +66,25 @@ public class LinkedQueue<E> implements Queue<E> {
         if (head == null) {
             tail = null;
         }
-        size --;
+        size--;
         return ret.e;
     }
+
     @Override
     public E getFront() {
+        if (isEmpty()) {
+            throw new IllegalArgumentException("GetFront failed. Empty queue.");
+        }
         return head.e;
     }
+
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
         res.append("Queue: front ");
         Node cur = head;
         while (cur != null) {
-            res.append(cur + "->");
+            res.append(cur).append("->");
             cur = cur.next;
         }
         res.append("NULL tail");
@@ -74,12 +92,13 @@ public class LinkedQueue<E> implements Queue<E> {
     }
 
     public static void main(String[] args) {
-        ArrayQueue<Integer> arr = new ArrayQueue<>();
-        for (int i = 0; i < 10; i ++) {
+        LinkedQueue<Integer> arr = new LinkedQueue<>();
+        for (int i = 0; i < 10; i++) {
             arr.enqueue(i);
             System.out.println(arr);
             if (i % 3 == 2) {
                 arr.dequeue();
+                System.out.println(arr);
             }
         }
     }

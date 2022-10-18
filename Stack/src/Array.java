@@ -172,5 +172,27 @@ public class Array<E> {
         return res.toString();
     }
 
+    public static void main(String[] args) {
+        Array<Integer> arr = new Array();
+        LinkedList<Integer> list = new LinkedList<>();
+        int[] opData = {100000, 10000000};
+        for (int op : opData) {
+            double start = System.nanoTime();
+            for (int i = 0; i < op; i++) {
+                arr.addLast(i);
+            }
+            double end = System.nanoTime();
+            double time = (end - start) / 1.0e9;
+            System.out.printf("ArrayList cost %fs\n", time);
 
+            start = System.nanoTime();
+            for (int i = 0; i < op; i++) {
+                list.addFirst(i);
+            }
+            end = System.nanoTime();
+            time = (end - start) / 1.0e9;
+            System.out.printf("LinkedList cost %fs\n", time);
+        }
+
+    }
 }
