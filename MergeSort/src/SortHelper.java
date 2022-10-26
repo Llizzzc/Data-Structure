@@ -1,9 +1,10 @@
 public class SortHelper {
-
-    private SortHelper(){}
+    private SortHelper() {
+    }
 
     public static <E extends Comparable<E>> boolean isSorted(E[] arr) {
-        for (int i = 1; i < arr.length; i ++) {
+        // 相邻元素是否有序
+        for (int i = 1; i < arr.length; i++) {
             if (arr[i - 1].compareTo(arr[i]) > 0) {
                 return false;
             }
@@ -15,24 +16,22 @@ public class SortHelper {
         long start = System.nanoTime();
         if (sortName.equals("MergeSort")) {
             MergeSort.sort(arr);
-        }
-        if (sortName.equals("MergeSort2")) {
+        } else if (sortName.equals("MergeSort2")) {
             MergeSort.sort2(arr);
-        }
-        if (sortName.equals("MergeSort3")) {
+        } else if (sortName.equals("MergeSort3")) {
             MergeSort.sort3(arr);
-        }
-        if (sortName.equals("MergeSort4")) {
+        } else if (sortName.equals("MergeSort4")) {
             MergeSort.sort4(arr);
-        }
-        if (sortName.equals("MergeSortBU")) {
+        } else if (sortName.equals("MergeSortBU")) {
             MergeSort.sortBU(arr);
+        } else if (sortName.equals("MergeSortBU2")) {
+            MergeSort.sortBU2(arr);
         }
-        long end  = System.nanoTime();
+        long end = System.nanoTime();
         double time = (end - start) / 1.0e9;
         if (!SortHelper.isSorted(arr)) {
             throw new RuntimeException(sortName + " failed");
         }
-        System.out.printf("sort: %s, n: %d, time: %f\n", sortName, arr.length, time);
+        System.out.printf("%s: %d data cost %.2fs\n", sortName, arr.length, time);
     }
 }
