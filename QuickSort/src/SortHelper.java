@@ -30,6 +30,12 @@ public class SortHelper {
             QuickSort.sort(arr);
         } else if (sortName.equals("QuickSort2")) {
             QuickSort.sort2(arr);
+        } else if (sortName.equals("QuickSort3")) {
+            QuickSort.sort3(arr);
+        } else if (sortName.equals("QuickSort4")) {
+            QuickSort.sort4(arr);
+        } else if (sortName.equals("QuickSort5")) {
+            QuickSort.sort5(arr);
         }
         long end = System.nanoTime();
         double time = (end - start) / 1.0e9;
