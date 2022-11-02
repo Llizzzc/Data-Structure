@@ -1,6 +1,16 @@
 import java.util.Arrays;
 import java.util.Random;
 
+// 为三路快速排序设计，返回两个索引
+class Pair {
+    public int i;
+    public int j;
+    public Pair(int i, int j) {
+        this.i = i;
+        this.j = j;
+    }
+}
+
 public class QuickSort {
 
     private QuickSort() {
@@ -71,6 +81,20 @@ public class QuickSort {
         int p = partition4(arr, l, r, rdm.nextInt(r - l + 1));
         sort5(arr, l, p - 1, rdm);
         sort5(arr, p + 1, r, rdm);
+    }
+
+    // 三路快速排序
+    public static <E extends Comparable<E>> void sort6(E[] arr) {
+        Random p = new Random();
+        sort6(arr, 0, arr.length - 1, p);
+    }
+    private static <E extends Comparable<E>> void sort6(E[] arr, int l, int r, Random rdm) {
+        if (l >= r) {
+            return;
+        }
+        Pair p = partition5(arr, l, r, rdm.nextInt(r - l + 1));
+        sort6(arr, l, p.i, rdm);
+        sort6(arr, p.j, r, rdm);
     }
 
     // 在数组完全有序时会退化成n方的算法，且递归深度为n
@@ -145,6 +169,30 @@ public class QuickSort {
         return j;
     }
 
+    // 三路快速排序
+    private static <E extends Comparable<E>> Pair partition5(E[] arr, int l, int r, int rdm) {
+
+        int p = l + rdm;
+        swap(arr, l, p);
+        // arr[l + 1, lt] < v, arr[lt + 1, i - 1] == v, arr[gt, r] > v
+        int lt = l, i = l + 1, gt = r + 1;
+        while (i < gt) {
+            if (arr[i].compareTo(arr[l]) < 0) {
+                lt ++;
+                swap(arr, i, lt);
+                i ++;
+            } else if (arr[i].compareTo(arr[l]) > 0) {
+                gt --;
+                swap(arr, i, gt);
+            } else {
+                i ++;
+            }
+        }
+        swap(arr, l, lt);
+        // arr[l, lt - 1] < v, arr[lt, gt - 1] == v, arr[gt, r] > v
+        return new Pair(lt - 1, gt);
+    }
+
     private static <E> void swap(E[] arr, int i, int j) {
         E t = arr[i];
         arr[i] = arr[j];
@@ -155,22 +203,28 @@ public class QuickSort {
         System.out.println("Random Array:");
         Integer[] arr = ArrayGenerator.generatorRandomArray(1000000, 1000000);
         Integer[] arr2 = Arrays.copyOf(arr, arr.length);
+        Integer[] arr3 = Arrays.copyOf(arr, arr.length);
         SortHelper.sortTest(arr, "QuickSort4");
         SortHelper.sortTest(arr2, "QuickSort5");
+        SortHelper.sortTest(arr3, "QuickSort6");
         System.out.println();
 
         System.out.println("Order Array:");
         arr = ArrayGenerator.generatorOrderArray(1000000);
         arr2 = Arrays.copyOf(arr, arr.length);
+        arr3 = Arrays.copyOf(arr, arr.length);
         SortHelper.sortTest(arr, "QuickSort4");
         SortHelper.sortTest(arr2, "QuickSort5");
+        SortHelper.sortTest(arr3, "QuickSort6");
         System.out.println();
 
         System.out.println("Special Array:");
         arr = ArrayGenerator.generatorRandomArray(25000, 1);
         arr2 = Arrays.copyOf(arr, arr.length);
+        arr3 = Arrays.copyOf(arr, arr.length);
         SortHelper.sortTest(arr, "QuickSort4");
         SortHelper.sortTest(arr2, "QuickSort5");
+        SortHelper.sortTest(arr3, "QuickSort6");
         System.out.println();
     }
 }

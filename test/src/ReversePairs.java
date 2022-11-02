@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class ReversePairs {
 
     public int reversePairs(int[] nums) {

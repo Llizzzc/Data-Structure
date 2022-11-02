@@ -36,12 +36,14 @@ public class SortHelper {
             QuickSort.sort4(arr);
         } else if (sortName.equals("QuickSort5")) {
             QuickSort.sort5(arr);
+        } else if (sortName.equals("QuickSort6")) {
+            QuickSort.sort6(arr);
         }
         long end = System.nanoTime();
         double time = (end - start) / 1.0e9;
         if (!SortHelper.isSorted(arr)) {
             throw new RuntimeException(sortName + " failed");
         }
-        System.out.printf("%s: %d data cost %.2fs\n", sortName, arr.length, time);
+        System.out.printf("%s: %d data cost %fs\n", sortName, arr.length, time);
     }
 }
