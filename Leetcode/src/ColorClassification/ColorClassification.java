@@ -1,3 +1,5 @@
+package ColorClassification;
+
 public class ColorClassification {
 
     public void sortColors(int[] nums) {

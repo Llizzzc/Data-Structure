@@ -1,5 +1,3 @@
-package ArrayGenerator;
-
 public class ArrayGenerator {
     private ArrayGenerator(){}
     public static Integer[] generatorOrderArray(int n) {

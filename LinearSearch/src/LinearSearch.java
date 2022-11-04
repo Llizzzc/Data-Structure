@@ -1,8 +1,3 @@
-package LinearSearch;
-
-import ArrayGenerator.ArrayGenerator;
-import Student.Student;
-
 public class LinearSearch {
     // 不让创建LinearSearch对象
     private LinearSearch() {

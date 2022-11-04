@@ -1,5 +1,3 @@
-package Student;
-
 public class Student {
     private String name;
     private int number;

@@ -1,10 +1,15 @@
+package GetLeastNumbers;
+import java.util.Arrays;
 import java.util.Random;
 
-public class FindKthLargest {
-
-    public int findKthLargest(int[] nums, int k) {
+public class GetLeastNumbers {
+    public int[] getLeastNumbers(int[] nums, int k) {
+        if (k == 0) {
+            return new int[0];
+        }
         Random r = new Random();
-        return selectK(nums, 0, nums.length - 1, nums.length - k, r);
+        selectK(nums, 0, nums.length - 1, k - 1, r);
+        return Arrays.copyOf(nums, k);
     }
 
     private int selectK(int[] nums, int l, int r, int k, Random rdm) {

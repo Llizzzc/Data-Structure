@@ -1,3 +1,5 @@
+package ReversePairs;
+
 public class ReversePairs {
 
     public int reversePairs(int[] nums) {
