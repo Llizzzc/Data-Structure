@@ -5,14 +5,30 @@ public class FindKthLargest {
 
     public int findKthLargest(int[] nums, int k) {
         Random r = new Random();
-        return selectK(nums, 0, nums.length - 1, nums.length - k, r);
+        return selectK(nums, nums.length - k, r);
     }
 
-    private int selectK(int[] nums, int l, int r, int k, Random rdm) {
+    // 递归实现
+    private int selectKR(int[] nums, int l, int r, int k, Random rdm) {
         int p = partition(nums, l, r, rdm);
         if (k == p) return nums[p];
-        if (k < p) return selectK(nums, l, p - 1, k, rdm);
-        return selectK(nums, p + 1, r, k, rdm);
+        if (k < p) return selectKR(nums, l, p - 1, k, rdm);
+        return selectKR(nums, p + 1, r, k, rdm);
+    }
+
+    // 非递归实现
+    private int selectK(int[] nums, int k, Random rdm) {
+        int l = 0, r = nums.length - 1;
+        while (l <= r) {
+            int p = partition(nums, l, r, rdm);
+            if (p == k) return nums[p];
+            if (k < p) {
+                r = p - 1;
+            } else {
+                l = p + 1;
+            }
+        }
+        throw new IllegalArgumentException("No Solution.");
     }
 
     private int partition(int[] nums, int l, int r, Random rdm) {
