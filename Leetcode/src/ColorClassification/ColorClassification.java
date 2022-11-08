@@ -1,3 +1,6 @@
+/*
+ * 75. 颜色分类
+ */
 package ColorClassification;
 
 public class ColorClassification {

@@ -1,3 +1,6 @@
+/*
+ * 704. 二分查找
+ */
 package BinarySearch;
 
 public class BinarySearch {
