@@ -156,6 +156,33 @@ public class BST<E extends Comparable<E>> {
         inOrderR(node.right);
     }
 
+    // 中序遍历，非递归
+    public void inOrder() {
+        Deque<Node> st = new LinkedList<>();
+        Node leftNode = root;
+        st.addLast(leftNode);
+        // 往左走，将经过的根节点依次入栈
+        while (!st.isEmpty()) {
+            while (leftNode.left != null) {
+                st.addLast(leftNode.left);
+                leftNode = leftNode.left;
+            }
+            // 栈顶出栈
+            Node cur = st.removeLast();
+            System.out.println(cur.e);
+            // 如果当前节点有右孩子，入栈
+            if (cur.right != null) {
+                st.addLast(cur.right);
+                Node rLeftNode = cur.right;
+                // 从右孩子向左走，将经过的根节点依次入栈
+                while (rLeftNode.left != null) {
+                    st.addLast(rLeftNode.left);
+                    rLeftNode = rLeftNode.left;
+                }
+            }
+        }
+    }
+
     // 后序遍历, 递归写法
     public void postOrderR() {
         postOrderR(root);
@@ -167,6 +194,37 @@ public class BST<E extends Comparable<E>> {
         postOrderR(node.left);
         postOrderR(node.right);
         System.out.println(node.e);
+    }
+
+    // 后序遍历，非递归
+    public void postOrder() {
+        Deque<Node> st = new LinkedList<>();
+        Node leftNode = root;
+        Node flat = null;   // 标记最近出栈的节点
+        // 从根节点开始，往左走依次入栈
+        st.addLast(leftNode);
+        while (!st.isEmpty()) {
+            while (leftNode.left != null) {
+                st.addLast(leftNode.left);
+                leftNode = leftNode.left;
+            }
+            // 获取栈顶元素
+            Node cur = st.getLast();
+            // 右孩子非空且右孩子没有入栈过
+            if (cur.right != null && cur.right != flat) {
+                st.addLast(cur.right);
+                // 从右孩子开始，向左走，依入栈
+                Node rLeftNode = cur.right;
+                while (rLeftNode.left != null) {
+                    st.addLast(rLeftNode.left);
+                    rLeftNode = rLeftNode.left;
+                }
+            } else { // 无右孩子则出栈当前节点，并标记
+                Node p = st.removeLast();
+                flat = p;
+                System.out.println(p.e);
+            }
+        }
     }
 
     // 层次遍历
@@ -189,7 +247,7 @@ public class BST<E extends Comparable<E>> {
 
     // 查找最小值, 递归写法
     public E minimumR() {
-        if (root == null) {
+        if (size == 0) {
             throw new RuntimeException("FindMin failed. Empty tree now.");
         }
         return minimumR(root).e;
@@ -203,7 +261,7 @@ public class BST<E extends Comparable<E>> {
 
     // 查找最小值，非递归写法
     public E minimum() {
-        if (root == null) {
+        if (size == 0) {
             throw new RuntimeException("FindMin failed. Empty tree now.");
         }
         Node cur = root;
@@ -215,7 +273,7 @@ public class BST<E extends Comparable<E>> {
 
     // 查找最大值, 递归写法
     public E maximumR() {
-        if (root == null) {
+        if (size == 0) {
             throw new RuntimeException("FindMax failed. Empty tree now.");
         }
         return maximumR(root).e;
@@ -229,7 +287,7 @@ public class BST<E extends Comparable<E>> {
 
     // 查找最大值，非递归写法
     public E maximum() {
-        if (root == null) {
+        if (size == 0) {
             throw new RuntimeException("FindMax failed. Empty tree now.");
         }
         Node cur = root;
@@ -315,6 +373,9 @@ public class BST<E extends Comparable<E>> {
 
     // 删除任意元素
     public void remove(E e) {
+        if (size == 0) {
+            throw new RuntimeException("remove failed. Empty tree now.");
+        }
         root = remove(root, e);
     }
     private Node remove(Node node, E e) {
@@ -349,6 +410,64 @@ public class BST<E extends Comparable<E>> {
         }
     }
 
+    // 获取指定元素的前驱节点值，递归
+    public E floor(E e) {
+        if (size == 0) {
+            throw new RuntimeException("Floor failed. Empty tree now.");
+        }
+        // 若e比树中最小元素还小，则不存在前驱节点
+        if (e.compareTo(minimumR()) < 0) {
+            return null;
+        }
+        return floor(root, e).e;
+    }
+    private Node floor(Node node, E e) {
+        if (node == null) {
+            return null;
+        }
+        if (e.compareTo(node.e) < 0) {
+            return floor(node.left, e);
+        }
+        if (e.compareTo(node.e) == 0) {
+            return node;
+        }
+        // e > node.e 时，node可能为前驱节点，还需向右找是否存在比node更大的前驱
+        Node temp = floor(node.right, e);
+        if (temp != null) {
+            return temp;
+        }
+        return node;
+    }
+
+    // 获取指定元素的后继节点值，递归
+    public E ceil(E e) {
+        if (size == 0) {
+            throw new RuntimeException("Ceil failed. Empty tree now.");
+        }
+        // 若e比树中最小元素还小，则不存在前驱节点
+        if (e.compareTo(maximumR()) > 0) {
+            return null;
+        }
+        return ceil(root, e).e;
+    }
+    private Node ceil(Node node, E e) {
+        if (node == null) {
+            return null;
+        }
+        if (e.compareTo(node.e) > 0) {
+            return ceil(node.right, e);
+        }
+        if (e.compareTo(node.e) == 0) {
+            return node;
+        }
+        // e < node.e 时，node可能为后继节点，还需向右找是否存在比node更大的后继
+        Node temp = ceil(node.left, e);
+        if (temp != null) {
+            return temp;
+        }
+        return node;
+    }
+
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
@@ -380,7 +499,7 @@ public class BST<E extends Comparable<E>> {
         for (int num : nums) {
             bst.addR(num);
         }
-        bst.remove(5);
-        System.out.println(bst);
+        System.out.println(bst.floor(1));
+        System.out.println(bst.ceil(1));
     }
 }
