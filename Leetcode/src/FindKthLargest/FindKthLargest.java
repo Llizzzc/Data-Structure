@@ -2,6 +2,7 @@
  * 215. 数组中的第K个最大元素
  */
 package FindKthLargest;
+import java.util.PriorityQueue;
 import java.util.Random;
 
 public class FindKthLargest {
@@ -61,5 +62,21 @@ public class FindKthLargest {
         int t = nums[i];
         nums[i] = nums[j];
         nums[j] = t;
+    }
+
+    // 使用优先队列
+    public int findKthLargest2(int[] nums, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for (int i = 0; i < k; i ++) {
+            pq.add(nums[i]);
+        }
+
+        for (int i = k; i < nums.length; i ++) {
+            if (!pq.isEmpty() && nums[i] > pq.peek()) {
+                pq.remove();
+                pq.add(nums[i]);
+            }
+        }
+        return pq.remove();
     }
 }

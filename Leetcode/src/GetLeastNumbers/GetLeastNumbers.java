@@ -2,9 +2,7 @@
  * 剑指 Offer 40. 最小的k个数
  */
 package GetLeastNumbers;
-import java.util.Arrays;
-import java.util.PriorityQueue;
-import java.util.Random;
+import java.util.*;
 
 public class GetLeastNumbers {
 
@@ -54,9 +52,9 @@ public class GetLeastNumbers {
         nums[j] = t;
     }
 
-    // 优先队列思想，java自带的优先队列为最小堆实现，这里要换成自己实现的最大堆优先队列
+    // 优先队列思想，java自带的优先队列为最小堆实现，这里要换成最大堆优先队列
     public int[] getLeastNumbers2(int[] nums, int k) {
-        PriorityQueue<Integer> pq =  new PriorityQueue<>();
+        PriorityQueue<Integer> pq =  new PriorityQueue<>(Collections.reverseOrder());
         for (int i = 0; i < k; i ++) {
             pq.add(nums[i]);
         }
