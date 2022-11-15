@@ -33,21 +33,6 @@ public class SelectSort {
         arr[i] = arr[j];
         arr[j] = t;
     }
-
-    public static void main(String[] args) {
-//        Student[] students = {new Student("bob", 92),
-//                new Student("alice", 85), new Student("dell", 77)};
-//        sort(students);
-//        for (Student student : students) {
-//            System.out.println(student);
-//        }
-
-        int[] dateSize = {10000, 100000};
-        for (int n : dateSize) {
-            Integer[] arr = ArrayGenerator.generatorRandomArray(n, n);
-            SortHelper.sortTest(arr, "SelectSort");
-        }
-    }
 }
 
 

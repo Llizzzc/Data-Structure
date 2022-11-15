@@ -134,23 +134,4 @@ public class LinkedList<E> {
         res.append("NULL");
         return res.toString();
     }
-
-    public static void main(String[] args) {
-        LinkedList<Integer> linkedList = new LinkedList<>();
-        for (int i = 0; i < 5; i++) {
-            linkedList.addFirst(i);
-            System.out.println(linkedList);
-        }
-        linkedList.add(3, 5);
-        System.out.println(linkedList);
-        linkedList.remove(5);
-        System.out.println(linkedList);
-        linkedList.remove(1);
-        System.out.println(linkedList);
-        linkedList.set(2, 99);
-        System.out.println(linkedList);
-        System.out.println(linkedList.getFirst());
-        System.out.println(linkedList.contains(1));
-        System.out.println(linkedList.contains(-1));
-    }
 }

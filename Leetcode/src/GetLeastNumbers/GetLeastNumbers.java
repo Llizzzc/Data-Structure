@@ -3,9 +3,12 @@
  */
 package GetLeastNumbers;
 import java.util.Arrays;
+import java.util.PriorityQueue;
 import java.util.Random;
 
 public class GetLeastNumbers {
+
+    // 快速排序思想
     public int[] getLeastNumbers(int[] nums, int k) {
         if (k == 0) {
             return new int[0];
@@ -49,5 +52,24 @@ public class GetLeastNumbers {
         int t = nums[i];
         nums[i] = nums[j];
         nums[j] = t;
+    }
+
+    // 优先队列思想，java自带的优先队列为最小堆实现，这里要换成自己实现的最大堆优先队列
+    public int[] getLeastNumbers2(int[] nums, int k) {
+        PriorityQueue<Integer> pq =  new PriorityQueue<>();
+        for (int i = 0; i < k; i ++) {
+            pq.add(nums[i]);
+        }
+        for (int i = k; i < nums.length; i ++) {
+            if (!pq.isEmpty() && nums[i] < pq.peek()) {
+                pq.remove();
+                pq.add(nums[i]);
+            }
+        }
+        int[] res = new int[k];
+        for (int i = 0; i < k; i ++) {
+            res[i] = pq.remove();
+        }
+        return res;
     }
 }
