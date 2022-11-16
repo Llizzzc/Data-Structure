@@ -1,21 +1,6 @@
-import java.util.Arrays;
-
 public class HeapSort {
 
     private HeapSort() {}
-
-    // 需要额外的堆空间
-    public static <E extends Comparable<E>> void sort(E[] data) {
-
-        MaxHeap<E> heap = new MaxHeap<>();
-        for (E datum : data) {
-            heap.add(datum);
-        }
-        for (int i  = data.length - 1; i >= 0; i --) {
-            data[i] = heap.extractMax();
-        }
-
-    }
 
     // 原地排序
     public static <E extends Comparable<E>> void sort2(E[] data) {
@@ -52,18 +37,5 @@ public class HeapSort {
         E t = data[i];
         data[i] = data[j];
         data[j] = t;
-    }
-
-    public static void main(String[] args) {
-        Integer[] arr = ArrayGenerator.generatorRandomArray(1000000, 1000000);
-        Integer[] arr2 = Arrays.copyOf(arr, arr.length);
-        Integer[] arr3 = Arrays.copyOf(arr, arr.length);
-        Integer[] arr4 = Arrays.copyOf(arr, arr.length);
-        Integer[] arr5 = Arrays.copyOf(arr, arr.length);
-        SortHelper.sortTest(arr, "MergeSort4");
-        SortHelper.sortTest(arr2, "QuickSort5");
-        SortHelper.sortTest(arr3, "QuickSort6");
-        SortHelper.sortTest(arr4, "HeapSort");
-        SortHelper.sortTest(arr5, "HeapSort2");
     }
 }
