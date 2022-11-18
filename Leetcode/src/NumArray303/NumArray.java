@@ -1,7 +1,7 @@
 /*
  * 303. 区域和检索 - 数组不可变
  */
-package NumArray;
+package NumArray303;
 
 public class NumArray {
     private SegmentTree<Integer> st;

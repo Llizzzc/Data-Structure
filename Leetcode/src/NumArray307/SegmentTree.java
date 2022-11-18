@@ -1,3 +1,7 @@
+/*
+ * 307. 区域和检索 - 数组可修改
+ */
+package NumArray307;
 public class SegmentTree<E> {
 
     private E[] data;
@@ -96,6 +100,7 @@ public class SegmentTree<E> {
 
         tree[treeIndex] = merge.merge(tree[leftChild], tree[rightChild]);
     }
+
 
     @Override
     public String toString() {

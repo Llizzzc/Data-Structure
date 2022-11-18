@@ -1,4 +1,4 @@
-package NumArray;
+package NumArray303;
 public class SegmentTree<E> {
 
     private E[] data;
