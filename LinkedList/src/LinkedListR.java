@@ -35,14 +35,6 @@ public class LinkedListR<E> {
             this.node = node;
             this.value = value;
         }
-
-        public Node getNode() {
-            return this.node;
-        }
-
-        public E getValue() {
-            return this.value;
-        }
     }
 
     private Node head;
@@ -146,8 +138,8 @@ public class LinkedListR<E> {
         }
         size--;
         Pair res = remove(index, head);
-        head = res.getNode();
-        return res.getValue();
+        head = res.node;
+        return res.value;
     }
 
     private Pair remove(int index, Node node) {
@@ -155,8 +147,8 @@ public class LinkedListR<E> {
             return new Pair(node.next, node.e);
         }
         Pair res = remove(index - 1, node.next);
-        node.next = res.getNode();
-        return new Pair(node, res.getValue());
+        node.next = res.node;
+        return new Pair(node, res.value);
     }
 
     public E removeFirst() {

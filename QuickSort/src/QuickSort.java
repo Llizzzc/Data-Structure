@@ -1,19 +1,17 @@
-import java.util.Arrays;
 import java.util.Random;
-
-// 为三路快速排序设计，返回两个索引
-class Pair {
-    public int i;
-    public int j;
-    public Pair(int i, int j) {
-        this.i = i;
-        this.j = j;
-    }
-}
-
 public class QuickSort {
 
     private QuickSort() {
+    }
+
+    // 为三路快速排序设计，返回两个索引
+    private static class Pair {
+        public int indexI;
+        public int indexJ;
+        public Pair(int i, int j) {
+            this.indexI = i;
+            this.indexJ = j;
+        }
     }
 
     public static <E extends Comparable<E>> void sort(E[] arr) {
@@ -93,8 +91,8 @@ public class QuickSort {
             return;
         }
         Pair p = partition5(arr, l, r, rdm.nextInt(r - l + 1));
-        sort6(arr, l, p.i, rdm);
-        sort6(arr, p.j, r, rdm);
+        sort6(arr, l, p.indexI, rdm);
+        sort6(arr, p.indexJ, r, rdm);
     }
 
     // 在数组完全有序时会退化成n方的算法，且递归深度为n
@@ -190,41 +188,12 @@ public class QuickSort {
         }
         swap(arr, l, lt);
         // arr[l, lt - 1] < v, arr[lt, gt - 1] == v, arr[gt, r] > v
-        return new Pair(lt - 1, gt);
+        return new QuickSort.Pair(lt - 1, gt);
     }
 
     private static <E> void swap(E[] arr, int i, int j) {
         E t = arr[i];
         arr[i] = arr[j];
         arr[j] = t;
-    }
-
-    public static void main(String[] args) {
-        System.out.println("Random Array:");
-        Integer[] arr = ArrayGenerator.generatorRandomArray(1000000, 1000000);
-        Integer[] arr2 = Arrays.copyOf(arr, arr.length);
-        Integer[] arr3 = Arrays.copyOf(arr, arr.length);
-        SortHelper.sortTest(arr, "QuickSort4");
-        SortHelper.sortTest(arr2, "QuickSort5");
-        SortHelper.sortTest(arr3, "QuickSort6");
-        System.out.println();
-
-        System.out.println("Order Array:");
-        arr = ArrayGenerator.generatorOrderArray(1000000);
-        arr2 = Arrays.copyOf(arr, arr.length);
-        arr3 = Arrays.copyOf(arr, arr.length);
-        SortHelper.sortTest(arr, "QuickSort4");
-        SortHelper.sortTest(arr2, "QuickSort5");
-        SortHelper.sortTest(arr3, "QuickSort6");
-        System.out.println();
-
-        System.out.println("Special Array:");
-        arr = ArrayGenerator.generatorRandomArray(25000, 1);
-        arr2 = Arrays.copyOf(arr, arr.length);
-        arr3 = Arrays.copyOf(arr, arr.length);
-        SortHelper.sortTest(arr, "QuickSort4");
-        SortHelper.sortTest(arr2, "QuickSort5");
-        SortHelper.sortTest(arr3, "QuickSort6");
-        System.out.println();
     }
 }
