@@ -1,13 +1,9 @@
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class Main {
-    public static void main(String[] args) {
-        String encode = URLEncoder.encode("hello, 黎", StandardCharsets.UTF_8);
-        System.out.println(encode);
-        System.out.println(URLDecoder.decode(encode, StandardCharsets.UTF_8));
-    }
+        public static long fact(long n) {
+            long r = 1;
+            for (long i = 1; i <= n; i++) {
+                r = r * i;
+            }
+            return r;
+        }
 }
